@@ -571,6 +571,24 @@ const DoctorDashboard = () => {
                   ) : (
                     <Typography variant="body2" color="text.secondary">No prescriptions found.</Typography>
                   )}
+                  {/* Prescription buttons */}
+              <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
+                <Button variant="contained" onClick={() =>
+                  navigate(`/doctor/${id}/prescriptions/new`, { state: { appointment: appt, doctor, patient: appt.patient } })
+                }>
+                  Add Prescription
+                </Button>
+                {prescriptions[appt.id] ? (
+                  <Button variant="outlined" onClick={() =>
+                    navigate(`/doctor/${id}/prescriptions/view/${prescriptions[appt.id].id}`)
+                  }>
+                    View Prescription
+                  </Button>
+                ) : (
+                  <Typography variant="body2" color="gray">No prescription added</Typography>
+                )}
+              </Box>
+ 
                 </Paper>
               </AccordionDetails>
             </Accordion>
