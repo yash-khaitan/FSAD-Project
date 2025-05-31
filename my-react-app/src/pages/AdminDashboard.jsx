@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { prepareReportDataWithAppointments } from "./utils/reportUtils";
 import {
   Container,
   Paper,
@@ -222,19 +223,36 @@ export default function AdminDashboard() {
       ]);
       const doctorsData = await doctorsRes.json();
       const patientsData = await patientsRes.json();
+      //const patientCountByDoctor = {};
+//     patientsData.forEach((patient) => {
+//       if (patient.doctorId) {
+//         patientCountByDoctor[patient.doctorId] =
+//           (patientCountByDoctor[patient.doctorId] || 0) + 1;
+//       }
+//     });
 
-      const patientCountByDoctor = {};
-      for (const patient of patientsData) {
-        if (patient.doctorId) {
-          patientCountByDoctor[patient.doctorId] =
-            (patientCountByDoctor[patient.doctorId] || 0) + 1;
-        }
-      }
+//     const chartData = doctorsData.map((doctor) => ({
+//       name: `${doctor.firstName} ${doctor.lastName}`,
+//       PatientsHandled: patientCountByDoctor[doctor.id] || 0,
+//     }));
+//     console.log("Doctor-wise patient count chart data:", chartData);
+// setReportData(chartData);
+const chartData = await prepareReportDataWithAppointments();
+console.log("Doctor-wise patient count chart data:", chartData);
+setReportData(chartData);
 
-      const chartData = doctorsData.map((doc) => ({
-        name: `${doc.firstName} ${doc.lastName}`,
-        PatientsHandled: patientCountByDoctor[doc.id] || 0,
-      }));
+      // const patientCountByDoctor = {};
+      // for (const patient of patientsData) {
+      //   if (patient.doctorId) {
+      //     patientCountByDoctor[patient.doctorId] =
+      //       (patientCountByDoctor[patient.doctorId] || 0) + 1;
+      //   }
+      // }
+
+      // const chartData = doctorsData.map((doc) => ({
+      //   name: `${doc.firstName} ${doc.lastName}`,
+      //   PatientsHandled: patientCountByDoctor[doc.id] || 0,
+      // }));
 
       const ageGroups = { "0-18": 0, "19-35": 0, "36-60": 0, "60+": 0 };
       patientsData.forEach((pat) => {
