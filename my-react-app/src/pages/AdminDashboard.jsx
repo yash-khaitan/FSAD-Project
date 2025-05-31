@@ -321,15 +321,29 @@ export default function AdminDashboard() {
 
   return (
 <>
-    <Box sx={{
-      position: 'fixed',
-      top: 16,
-      right: 16,
-      zIndex: 1000,
-      display: 'flex',
-      gap: 1,
-    }}>
-      <Button variant="outlined" onClick={() => navigate('/')}>Home</Button>
+<Box
+      sx={{
+        position: 'fixed',
+        top: 16,
+        right: 16,
+        zIndex: 1000,
+        boxShadow: 3,
+        borderRadius: 1,
+        bgcolor: 'background.paper',
+      }}
+    >
+      <Button
+        variant="outlined"
+        onClick={() => navigate('/')}
+        sx={{
+          textTransform: 'none',
+          fontWeight: 'medium',
+          px: 2,
+          py: 0.5,
+        }}
+      >
+        Home
+      </Button>
     </Box>
 
     <Container maxWidth="md" sx={{ mt: 5, mb: 5 }}>

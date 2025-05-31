@@ -1,3 +1,164 @@
+// import React, { useState } from 'react';
+// import {
+//   Container,
+//   TextField,
+//   Button,
+//   Typography,
+//   Box,
+//   Tabs,
+//   Tab,
+//   Paper
+// } from '@mui/material';
+// import axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
+
+// export default function DoctorRegistration() {
+//   const navigate = useNavigate();
+//   const [tab, setTab] = useState(0); // 0 = Login, 1 = Register
+
+//   const handleTabChange = (event, newValue) => {
+//     setTab(newValue);
+//   };
+
+//   const [formData, setFormData] = useState({
+//     firstName: '',
+//     lastName: '',
+//     specialization: '',
+//     email: '',
+//     phone: '',
+//     location: '',
+//     password: '',
+//     experience: '',
+//     education: '',
+//     fees: ''
+//   });
+
+//   const [loginData, setLoginData] = useState({
+//     email: '',
+//     password: ''
+//   });
+
+//   const handleRegisterChange = (e) => {
+//     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+//   };
+
+//   const handleLoginChange = (e) => {
+//     setLoginData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+//   };
+
+//   const handleRegisterSubmit = async (e) => {
+//     e.preventDefault();
+
+//     try {
+//       const response = await axios.post('http://localhost:8080/api/doctors', formData, {
+//         headers: {
+//           'Content-Type': 'application/json',
+//           'Accept': '*/*'
+//         }
+//       });
+//       const doctorId = response.data.id;
+//       navigate(`/dashboard/doctor/${doctorId}`);
+//     } catch (error) {
+//       console.error('Registration failed:', error);
+//       alert('Registration failed. Please try again.');
+//     }
+//   };
+
+//   const handleLoginSubmit = async (e) => {
+//     e.preventDefault();
+
+//     try {
+//       const response = await axios.post('http://localhost:8080/api/doctors/login', loginData, {
+//         headers: {
+//           'Content-Type': 'application/json'
+//         }
+//       });
+
+//       // const doctor = response.data;
+//       const doctorId = response.data.id;
+//       navigate(`/dashboard/doctor/${doctorId}`);
+//     } catch (error) {
+//       console.error('Login failed:', error);
+//       alert('Invalid email or password');
+//     }
+//   };
+
+//   return (
+//     <Container maxWidth="sm">
+//       <Paper elevation={3} sx={{ p: 4, mt: 5 }}>
+//         <Typography variant="h4" align="center" gutterBottom>
+//           Doctor Portal
+//         </Typography>
+
+//         <Tabs value={tab} onChange={handleTabChange} centered sx={{ mb: 2 }}>
+//           <Tab label="Sign In" />
+//           <Tab label="Register" />
+//         </Tabs>
+
+//         {tab === 0 && (
+//           <Box component="form" onSubmit={handleLoginSubmit} noValidate>
+//             <TextField
+//               fullWidth
+//               label="Email"
+//               name="email"
+//               type="email"
+//               onChange={handleLoginChange}
+//               margin="normal"
+//             />
+//             <TextField
+//               fullWidth
+//               label="Password"
+//               name="password"
+//               type="password"
+//               onChange={handleLoginChange}
+//               margin="normal"
+//             />
+//             <Button variant="contained" fullWidth type="submit" sx={{ mt: 2 }}>
+//               Sign In
+//             </Button>
+//           </Box>
+//         )}
+
+//         {tab === 1 && (
+//           <Box component="form" onSubmit={handleRegisterSubmit} noValidate sx={{ mt: 2 }}>
+//             <TextField fullWidth label="First Name" name="firstName" value={formData.firstName} onChange={handleRegisterChange} margin="normal" required/>
+//             <TextField fullWidth label="Last Name" name="lastName" value={formData.lastName} onChange={handleRegisterChange} margin="normal" required/>
+//             <TextField fullWidth label="Specialization" name="specialization" value={formData.specialization} onChange={handleRegisterChange} margin="normal" required/>
+//             <TextField fullWidth label="Email" name="email" type="email" value={formData.email} onChange={handleRegisterChange} margin="normal" required/>
+//             <TextField fullWidth label="Phone" name="phone" value={formData.phone} onChange={handleRegisterChange} margin="normal" />
+//             <TextField fullWidth label="Location" name="location" value={formData.location} onChange={handleRegisterChange} margin="normal" />
+//             <TextField fullWidth label="Experience (Years)" name="experience" value={formData.experience} onChange={handleRegisterChange} margin="normal" />
+//             <TextField fullWidth label="Education" name="education" value={formData.education} onChange={handleRegisterChange} margin="normal" />
+//             <TextField fullWidth label="Fees" name="fees" value={formData.fees} onChange={handleRegisterChange} margin="normal" required/>
+//             <TextField fullWidth label="Password" name="password" type="password" value={formData.password} onChange={handleRegisterChange} margin="normal" required/>
+//             {/* <Button variant="contained" fullWidth type="submit" sx={{ mt: 2 }}>
+//               Registersss
+//             </Button> */}
+//             <Button
+//             variant="contained"
+//             fullWidth
+//             type="submit"
+//             sx={{ mt: 2 }}
+//             disabled={
+//               !formData.firstName?.trim() ||
+//               !formData.lastName?.trim() ||
+//               !formData.specialization?.trim() ||
+//               !formData.email?.trim() ||
+//               !formData.fees?.toString().trim() ||
+//               !formData.password?.trim()
+//             }
+//           >
+//             Register
+//           </Button>
+
+//           </Box>
+//         )}
+//       </Paper>
+//     </Container>
+//   );
+// }
+
+
 import React, { useState } from 'react';
 import {
   Container,
@@ -74,7 +235,6 @@ export default function DoctorRegistration() {
         }
       });
 
-      // const doctor = response.data;
       const doctorId = response.data.id;
       navigate(`/dashboard/doctor/${doctorId}`);
     } catch (error) {
@@ -84,19 +244,28 @@ export default function DoctorRegistration() {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Paper elevation={3} sx={{ p: 4, mt: 5 }}>
-        <Typography variant="h4" align="center" gutterBottom>
+    <Container maxWidth="sm" sx={{ py: 5 }}>
+      <Paper elevation={4} sx={{ p: { xs: 3, sm: 5 }, borderRadius: 3 }}>
+        <Typography variant="h4" align="center" gutterBottom sx={{ fontWeight: 700, mb: 3 }}>
           Doctor Portal
         </Typography>
 
-        <Tabs value={tab} onChange={handleTabChange} centered sx={{ mb: 2 }}>
+        <Tabs
+          value={tab}
+          onChange={handleTabChange}
+          centered
+          sx={{
+            mb: 3,
+            '& .MuiTabs-indicator': { bgcolor: 'primary.main' },
+            '& .MuiTab-root': { fontWeight: 600, fontSize: '1rem' }
+          }}
+        >
           <Tab label="Sign In" />
           <Tab label="Register" />
         </Tabs>
 
         {tab === 0 && (
-          <Box component="form" onSubmit={handleLoginSubmit} noValidate>
+          <Box component="form" onSubmit={handleLoginSubmit} noValidate sx={{ display: 'flex', flexDirection: 'column' }}>
             <TextField
               fullWidth
               label="Email"
@@ -104,6 +273,8 @@ export default function DoctorRegistration() {
               type="email"
               onChange={handleLoginChange}
               margin="normal"
+              autoComplete="email"
+              required
             />
             <TextField
               fullWidth
@@ -112,45 +283,49 @@ export default function DoctorRegistration() {
               type="password"
               onChange={handleLoginChange}
               margin="normal"
+              autoComplete="current-password"
+              required
             />
-            <Button variant="contained" fullWidth type="submit" sx={{ mt: 2 }}>
+            <Button
+              variant="contained"
+              fullWidth
+              type="submit"
+              sx={{ mt: 3, py: 1.5, fontWeight: 600, fontSize: '1rem' }}
+            >
               Sign In
             </Button>
           </Box>
         )}
 
         {tab === 1 && (
-          <Box component="form" onSubmit={handleRegisterSubmit} noValidate sx={{ mt: 2 }}>
-            <TextField fullWidth label="First Name" name="firstName" value={formData.firstName} onChange={handleRegisterChange} margin="normal" required/>
-            <TextField fullWidth label="Last Name" name="lastName" value={formData.lastName} onChange={handleRegisterChange} margin="normal" required/>
-            <TextField fullWidth label="Specialization" name="specialization" value={formData.specialization} onChange={handleRegisterChange} margin="normal" required/>
-            <TextField fullWidth label="Email" name="email" type="email" value={formData.email} onChange={handleRegisterChange} margin="normal" required/>
+          <Box component="form" onSubmit={handleRegisterSubmit} noValidate sx={{ mt: 1, display: 'flex', flexDirection: 'column' }}>
+            <TextField fullWidth label="First Name" name="firstName" value={formData.firstName} onChange={handleRegisterChange} margin="normal" required />
+            <TextField fullWidth label="Last Name" name="lastName" value={formData.lastName} onChange={handleRegisterChange} margin="normal" required />
+            <TextField fullWidth label="Specialization" name="specialization" value={formData.specialization} onChange={handleRegisterChange} margin="normal" required />
+            <TextField fullWidth label="Email" name="email" type="email" value={formData.email} onChange={handleRegisterChange} margin="normal" required />
             <TextField fullWidth label="Phone" name="phone" value={formData.phone} onChange={handleRegisterChange} margin="normal" />
             <TextField fullWidth label="Location" name="location" value={formData.location} onChange={handleRegisterChange} margin="normal" />
             <TextField fullWidth label="Experience (Years)" name="experience" value={formData.experience} onChange={handleRegisterChange} margin="normal" />
             <TextField fullWidth label="Education" name="education" value={formData.education} onChange={handleRegisterChange} margin="normal" />
-            <TextField fullWidth label="Fees" name="fees" value={formData.fees} onChange={handleRegisterChange} margin="normal" required/>
-            <TextField fullWidth label="Password" name="password" type="password" value={formData.password} onChange={handleRegisterChange} margin="normal" required/>
-            {/* <Button variant="contained" fullWidth type="submit" sx={{ mt: 2 }}>
-              Registersss
-            </Button> */}
-            <Button
-            variant="contained"
-            fullWidth
-            type="submit"
-            sx={{ mt: 2 }}
-            disabled={
-              !formData.firstName?.trim() ||
-              !formData.lastName?.trim() ||
-              !formData.specialization?.trim() ||
-              !formData.email?.trim() ||
-              !formData.fees?.toString().trim() ||
-              !formData.password?.trim()
-            }
-          >
-            Register
-          </Button>
+            <TextField fullWidth label="Fees" name="fees" value={formData.fees} onChange={handleRegisterChange} margin="normal" required />
+            <TextField fullWidth label="Password" name="password" type="password" value={formData.password} onChange={handleRegisterChange} margin="normal" required />
 
+            <Button
+              variant="contained"
+              fullWidth
+              type="submit"
+              sx={{ mt: 3, py: 1.5, fontWeight: 600, fontSize: '1rem' }}
+              disabled={
+                !formData.firstName?.trim() ||
+                !formData.lastName?.trim() ||
+                !formData.specialization?.trim() ||
+                !formData.email?.trim() ||
+                !formData.fees?.toString().trim() ||
+                !formData.password?.trim()
+              }
+            >
+              Register
+            </Button>
           </Box>
         )}
       </Paper>
